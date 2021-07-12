@@ -1,0 +1,7 @@
+{
+  "name": "tags-component",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

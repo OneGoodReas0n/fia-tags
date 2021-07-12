@@ -1,0 +1,37 @@
+<ion-item [lines]="isInputOpen ? 'none' : 'none'" (focusout)="onFocusOut()">
+  <div style="display: flex;flex-direction: column;width: 100%;">
+    <div>
+      <ion-chip *ngFor="let tag of tags;index as $index" style="float: left;" class="ion-text-wrap">
+        <ion-icon name="pricetag" color="dark"></ion-icon>
+        <ion-label style="max-width:fit-content">{{tag}}</ion-label>
+        <ion-icon *ngIf="isInputOpen" name="close-circle" color="dark" (click)="removeTag($index)"></ion-icon>
+      </ion-chip>
+      <div style="float: left">
+        <ion-input *ngIf="isInputOpen"
+                   maxlength="32"
+                   #tagsInput
+                   appFocus
+                   style="width: 100px"
+                   placeholder="+Tag"
+                   enterkeyhint="done"
+                   [(ngModel)]="inputValue"
+                   (keyup.enter)="addTagByInput()"
+                   (keydown.backspace)="onBackspace()">
+        </ion-input>
+      </div>
+    </div>
+    <div *ngIf="(suggestList | filter:inputValue).length  > 0 && isInputOpen;" class="suggestion-list">
+      <ul>
+        <li *ngFor="let tag of suggestList | filter:inputValue | slice:0:3">
+          <div class="suggestion-list-item" (click)="addTagByBtn(tag)" id="suggestion-item">
+            <ion-icon name="pricetag" style="pointer-events: none"></ion-icon>
+            <span style="pointer-events: none">{{tag}}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</ion-item>
+
+

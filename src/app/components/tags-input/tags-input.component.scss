@@ -1,0 +1,27 @@
+li {
+  list-style-type: none;
+}
+
+.suggestion-list {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+  ul{
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+
+  .suggestion-list-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+
+    span {
+      margin-left: 5px;
+    }
+  }
+}
