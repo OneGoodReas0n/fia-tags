@@ -7,11 +7,5 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-item lines="none">
-    <ion-label>Tags</ion-label>
-    <ion-icon name="pencil-outline" (click)="toggleInput()"></ion-icon>
-  </ion-item>
-  <app-tags-input maxTags="10" [isInputOpen]="isTagInputOpen"
-                  (ionOnOpenInput)="updateIsTagInputOpen($event)"></app-tags-input>
-
+    <app-tags-component></app-tags-component>
 </ion-content>

@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Form, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -7,13 +8,4 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
 
-  isTagInputOpen = false;
-
-  toggleInput() {
-    this.isTagInputOpen = !this.isTagInputOpen;
-  }
-
-  updateIsTagInputOpen(state: boolean) {
-    this.isTagInputOpen = state;
-  }
 }

@@ -1,33 +1,65 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Input, OnInit,
   Output,
 } from '@angular/core';
 import {Platform} from '@ionic/angular';
+import {TagsService} from '../../services/tags.service';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
+export interface Tag {
+  sharedId?: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-tags-input',
   templateUrl: './tags-input.component.html',
   styleUrls: ['./tags-input.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: TagsInputComponent,
+      multi: true
+    }
+  ]
 })
-export class TagsInputComponent {
+export class TagsInputComponent implements OnInit, ControlValueAccessor {
 
-  @Output() ionOnOpenInput: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() ionOnPushTag: EventEmitter<Tag> = new EventEmitter<Tag>();
+  @Output() ionOnRemoveTag: EventEmitter<number> = new EventEmitter<number>();
   @Output() ionBlur: EventEmitter<any> = new EventEmitter<any>();
 
-  @Input() maxTags: number;
   @Input() mode: 'ios' | 'md' = 'ios';
-  @Input() isInputOpen: boolean;
-  @Input() inputValue = '';
+  @Input() addedTags: Array<Tag>;
+  @Input() suggestions: Array<Tag>;
+  onChange: (val: string) => void;
+  onTouched: () => void;
 
-  tags: Array<string> = ['test1', 'test2'];
-  suggestions: Array<string> = ['sommer', 'garten', 'urlaub', 'test1', 'test2'];
-  suggestList: Array<string> = this.suggestions;
+  inputValue = '';
 
+  constructor(private plt: Platform, private service: TagsService) {
+  }
 
-  constructor(private plt: Platform) {
+  writeValue(value: string): void {
+    this.inputValue = value;
+  }
+
+  setValue(event: Event): void {
+    this.inputValue = (event.target as HTMLInputElement).value;
+    this.onChange(this.inputValue);
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  ngOnInit() {
     this.nativeDoneLister();
   }
 
@@ -37,58 +69,23 @@ export class TagsInputComponent {
         this.addTagByInput();
       }
     });
-    this.suggestList = this.suggestions.filter((item) => !this.tags.includes(item));
   }
 
   public addTagByInput(): void {
-    if (this.inputValue.length === 0 || this.tags.length >= this.maxTags
-    ) {
+    if (this.inputValue.length === 0) {
       this.inputValue = '';
       return;
     }
-    const tag = this.inputValue.trim();
-    this.tags.push(tag);
-    this.suggestions.push(tag);
-    this.inputValue = '';
-  }
-
-  public addTagByBtn(name: string): void {
-    this.tags.push(name);
-    this.suggestList = this.suggestList.filter(el => el !== name);
-    this.inputValue = '';
+    const tagName = this.inputValue.trim();
+    if (!this.addedTags.map(t => t.name).includes(tagName)) {
+      const tag: Tag = {name: tagName};
+      this.ionOnPushTag.emit(tag);
+    }
   }
 
   public onBackspace(): void {
-    if (this.inputValue.length === 0 && this.tags.length > 0) {
-      this.removeTag(-1);
-    }
-  }
-
-  public returnToSuggestsList(tag: string): void {
-    if (this.suggestList.indexOf(tag) === -1) {
-      this.suggestList.push(tag);
-    }
-  }
-
-  public removeTag($index: number): void {
-    if (this.tags.length > 0
-    ) {
-      if ($index === -1) {
-        const removedTag = this.tags.pop();
-        this.returnToSuggestsList(removedTag);
-      } else {
-        this.returnToSuggestsList(this.tags[$index]);
-        this.tags.splice($index, 1);
-      }
-    }
-  }
-
-  public onFocusOut(): void {
-    if (this.isInputOpen) {
-      setTimeout(()=>{
-        this.ionOnOpenInput.emit(false);
-      });
-
+    if (this.inputValue.length === 0 && this.addedTags.length > 0) {
+      this.ionOnRemoveTag.emit(-1);
     }
   }
 }

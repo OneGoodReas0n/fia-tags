@@ -1,0 +1,6 @@
+<ion-chip *ngFor="let tag of tags;index as $index" style="float: left;" class="ion-text-wrap">
+  <ion-icon name="pricetag" color="dark"></ion-icon>
+  <ion-label style="max-width:fit-content">{{tag.name}}</ion-label>
+  <ion-icon [hidden]="!isInputOpen" name="close-circle" color="dark" (click)="removeTag($index)"></ion-icon>
+</ion-chip>
+

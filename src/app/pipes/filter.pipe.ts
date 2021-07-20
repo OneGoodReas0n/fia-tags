@@ -1,4 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
+import {Tag} from '../components/tags-input/tags-input.component';
 
 @Pipe({
   name: 'filter',
@@ -6,11 +7,11 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(tags: string[], search: string = ''): Array<string> {
+  transform(tags: Array<Tag>, search: string = ''): Array<Tag> {
     if (!search.trim()) {
       return tags;
     }
-    return tags.filter(el => el.startsWith(search));
+    return tags.filter(el => el.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
   }
 
 }
