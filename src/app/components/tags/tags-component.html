@@ -1,0 +1,37 @@
+<div (focusout)="onBlur()">
+  <ion-item lines="none" class="tagsComponent">
+    <div>
+      <app-tags-list [showControl]="isInputOpen"
+                     [savedTags]="tags"
+                     (ionRemoveFromTags)="removeTag($event)">
+      </app-tags-list>
+      <ion-input *ngIf="isInputOpen"
+                 #tagsInput
+                 appFocus
+                 placeholder="+Tag"
+                 enterkeyhint="done"
+                 [(ngModel)]="inputValue"
+                 (input)="validateInput($event)"
+                 (focusin)="focusIn()"
+                 (focusout)="focusOut()"
+                 (touchstart)="touchStart()"
+                 (touchend)="touchEnd()"
+                 (keyup.enter)="addTagByInput()"
+                 (keydown.backspace)="removeByBackspace()">
+      </ion-input>
+    </div>
+  </ion-item>
+  <app-tags-suggestions [showSuggestionList]="isInputFocused && !errors?.maxTags"
+                        [suggestions]="suggestions"
+                        [inputValue]="inputValue"
+                        (ionPushTag)="addTagFromSuggestions($event)">
+  </app-tags-suggestions>
+  <div *ngIf="errors || !isInputValid" style="width: 100%;height: 1px;background-color: red;">
+    <ion-text color="danger"
+              *ngIf="!isInputValid">Name of Tag should be less than 32
+      characters!
+    </ion-text>
+    <ion-text *ngIf="errors?.maxTags" color="danger">{{errors.maxTags.value}}
+    </ion-text>
+  </div>
+</div>

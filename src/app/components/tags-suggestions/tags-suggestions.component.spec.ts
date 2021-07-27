@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { TagsSuggestionsListComponent } from './tags-suggestions-list.component';
+import { TagsSuggestionsComponent } from './tags-suggestions.component';
 
-describe('TagsSuggestionsListComponent', () => {
-  let component: TagsSuggestionsListComponent;
-  let fixture: ComponentFixture<TagsSuggestionsListComponent>;
+describe('TagsSuggestionsComponent', () => {
+  let component: TagsSuggestionsComponent;
+  let fixture: ComponentFixture<TagsSuggestionsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TagsSuggestionsListComponent ],
+      declarations: [ TagsSuggestionsComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TagsSuggestionsListComponent);
+    fixture = TestBed.createComponent(TagsSuggestionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

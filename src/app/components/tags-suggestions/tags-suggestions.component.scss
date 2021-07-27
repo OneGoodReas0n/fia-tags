@@ -1,0 +1,31 @@
+.suggestions{
+  position: absolute;
+  width: 100%;
+  padding: 0 16px;
+
+  .suggestions-list {
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding-left: 0;
+
+    li {
+      list-style-type: none;
+    }
+
+    .suggestion-list-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+
+      & *{
+       pointer-events: none;
+      }
+
+      span {
+        margin-left: 5px;
+      }
+    }
+  }
+}

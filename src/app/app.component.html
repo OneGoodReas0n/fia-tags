@@ -7,5 +7,17 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <app-tags-component></app-tags-component>
+  <ion-item lines="none">
+    <ion-label>Tags</ion-label>
+    <ion-icon name="pencil-outline" (click)="toggleValue()"></ion-icon>
+  </ion-item>
+  <form [formGroup]="form" (submit)="submit()">
+    <app-tags formControlName="tags"
+              maxInputLength="32"
+              maxTagsLength="10"
+              (ionOnBlur)="blur()"
+              [isInputOpen]="isInputOpen"
+              [errors]="form.controls.tags.errors">
+    </app-tags>
+  </form>
 </ion-content>

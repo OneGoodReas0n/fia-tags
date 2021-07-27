@@ -1,9 +1,0 @@
-<ul class="suggestions-list">
-  <li *ngFor="let tag of suggestions | filter:inputValue | slice:0:3">
-    <div class="suggestion-list-item" (click)="addTagByBtn(tag)" id="suggestion-item">
-      <ion-icon name="pricetag" style="pointer-events: none"></ion-icon>
-      <span style="pointer-events: none">{{tag.name}}</span>
-    </div>
-  </li>
-</ul>
-
